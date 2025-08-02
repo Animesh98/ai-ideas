@@ -7,6 +7,7 @@ import clsx from 'clsx';
 interface SidebarProps {
   selectedFile: string | null;
   onFileSelect: (path: string) => void;
+  onNewFile: () => void;
   isOpen: boolean;
   onToggle: () => void;
 }
@@ -88,7 +89,7 @@ const FileTree: React.FC<FileTreeProps> = ({ nodes, selectedFile, onFileSelect, 
   );
 };
 
-const Sidebar: React.FC<SidebarProps> = ({ selectedFile, onFileSelect, isOpen, onToggle }) => {
+const Sidebar: React.FC<SidebarProps> = ({ selectedFile, onFileSelect, onNewFile, isOpen, onToggle }) => {
   const [searchTerm, setSearchTerm] = useState('');
 
   const filteredFiles = React.useMemo(() => {
@@ -118,7 +119,7 @@ const Sidebar: React.FC<SidebarProps> = ({ selectedFile, onFileSelect, isOpen, o
       <aside className={clsx('sidebar', { 'open': isOpen })}>
         <div className="sidebar-header">
           <h2>AI Ideas</h2>
-          <button className="new-file-btn" title="New File">
+          <button className="new-file-btn" title="New File" onClick={onNewFile}>
             <Plus size={18} />
           </button>
         </div>

@@ -24,6 +24,17 @@ const MarkdownViewer: React.FC<MarkdownViewerProps> = ({
   useEffect(() => {
     if (filePath) {
       setLoading(true);
+      
+      // Handle new files
+      if (filePath.startsWith('new/')) {
+        const fileName = filePath.split('/').pop()?.replace('.md', '') || 'Untitled';
+        const newContent = `# ${fileName}\n\nStart writing your ideas here...`;
+        setContent(newContent);
+        setEditContent(newContent);
+        setLoading(false);
+        return;
+      }
+      
       getFileContent(filePath)
         .then(content => {
           setContent(content);

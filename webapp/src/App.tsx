@@ -1,13 +1,15 @@
 import { useState, useEffect } from 'react';
-import { Menu, LogOut } from 'lucide-react';
+import { Menu, LogOut, Sun, Moon } from 'lucide-react';
 import AuthScreen from './components/AuthScreen';
 import Sidebar from './components/Sidebar';
 import MarkdownViewer from './components/MarkdownViewer';
 import { checkAuth, logout } from './utils/auth';
+import { ThemeProvider, useTheme } from './contexts/ThemeContext';
 import type { AppState } from './types';
 import './App.css';
 
-function App() {
+function AppContent() {
+  const { theme, toggleTheme } = useTheme();
   const [appState, setAppState] = useState<AppState>({
     isAuthenticated: false,
     selectedFile: null,
@@ -45,6 +47,19 @@ function App() {
     }));
   };
 
+  const handleNewFile = () => {
+    const fileName = prompt('Enter file name (without .md extension):');
+    if (fileName) {
+      const newFilePath = `new/${fileName}.md`;
+      setAppState(prev => ({
+        ...prev,
+        selectedFile: newFilePath,
+        editMode: true,
+        sidebarOpen: false,
+      }));
+    }
+  };
+
   const toggleSidebar = () => {
     setAppState(prev => ({ ...prev, sidebarOpen: !prev.sidebarOpen }));
   };
@@ -68,6 +83,10 @@ function App() {
         </div>
         
         <div className="header-right">
+          <button className="theme-toggle" onClick={toggleTheme}>
+            {theme === 'light' ? <Moon size={18} /> : <Sun size={18} />}
+            <span>{theme === 'light' ? 'Dark' : 'Light'}</span>
+          </button>
           <button className="logout-btn" onClick={handleLogout}>
             <LogOut size={18} />
             <span>Logout</span>
@@ -79,6 +98,7 @@ function App() {
         <Sidebar
           selectedFile={appState.selectedFile}
           onFileSelect={handleFileSelect}
+          onNewFile={handleNewFile}
           isOpen={appState.sidebarOpen}
           onToggle={toggleSidebar}
         />
@@ -92,6 +112,14 @@ function App() {
         </div>
       </main>
     </div>
+  );
+}
+
+function App() {
+  return (
+    <ThemeProvider>
+      <AppContent />
+    </ThemeProvider>
   );
 }
 

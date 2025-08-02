@@ -30,6 +30,24 @@
   --header-height: 60px;
 }
 
+/* Dark mode variables */
+[data-theme="dark"] {
+  --bg-primary: #1a1a1a;
+  --bg-secondary: #2d2d2d;
+  --bg-tertiary: #404040;
+  --bg-sidebar: #252525;
+  --text-primary: #ffffff;
+  --text-secondary: #b3b3b3;
+  --text-tertiary: #808080;
+  --border-color: #404040;
+  --accent-primary: #0a84ff;
+  --accent-hover: #409cff;
+  --accent-light: rgba(10, 132, 255, 0.1);
+  --shadow-light: 0 1px 3px rgba(0, 0, 0, 0.3);
+  --shadow-medium: 0 4px 6px rgba(0, 0, 0, 0.3);
+  --shadow-heavy: 0 10px 25px rgba(0, 0, 0, 0.5);
+}
+
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
   line-height: 1.6;
@@ -112,6 +130,25 @@ body {
 }
 
 .logout-btn:hover {
+  background-color: var(--bg-tertiary);
+  color: var(--text-primary);
+}
+
+.theme-toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: none;
+  padding: 8px 12px;
+  border-radius: var(--radius-small);
+  cursor: pointer;
+  color: var(--text-secondary);
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+.theme-toggle:hover {
   background-color: var(--bg-tertiary);
   color: var(--text-primary);
 }
@@ -215,6 +252,32 @@ body {
   flex: 1;
   overflow-y: auto;
   padding: 8px 0;
+}
+
+/* Custom scrollbar */
+.file-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.file-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.file-list::-webkit-scrollbar-thumb {
+  background: var(--text-tertiary);
+  border-radius: 3px;
+  opacity: 0.3;
+}
+
+.file-list::-webkit-scrollbar-thumb:hover {
+  background: var(--text-secondary);
+  opacity: 0.6;
+}
+
+/* Firefox scrollbar */
+.file-list {
+  scrollbar-width: thin;
+  scrollbar-color: var(--text-tertiary) transparent;
 }
 
 .file-tree-item {
@@ -457,6 +520,7 @@ body {
 
 .markdown-editor {
   flex: 1;
+  width: 100%;
   border: none;
   padding: 32px;
   font-family: 'SF Mono', Monaco, monospace;
@@ -466,6 +530,32 @@ body {
   background-color: var(--bg-primary);
   resize: none;
   outline: none;
+  box-sizing: border-box;
+  max-height: calc(100vh - var(--header-height) - 120px);
+}
+
+/* Custom scrollbar for editor */
+.markdown-editor::-webkit-scrollbar {
+  width: 8px;
+}
+
+.markdown-editor::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+  border-radius: 4px;
+}
+
+.markdown-editor::-webkit-scrollbar-thumb {
+  background: var(--text-tertiary);
+  border-radius: 4px;
+}
+
+.markdown-editor::-webkit-scrollbar-thumb:hover {
+  background: var(--text-secondary);
+}
+
+.markdown-editor {
+  scrollbar-width: thin;
+  scrollbar-color: var(--text-tertiary) var(--bg-secondary);
 }
 
 /* Markdown content */
@@ -474,6 +564,31 @@ body {
   overflow-y: auto;
   padding: 32px;
   background-color: var(--bg-primary);
+  max-height: calc(100vh - var(--header-height) - 80px); /* Account for viewer header */
+}
+
+/* Custom scrollbar for markdown content */
+.markdown-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.markdown-content::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+  border-radius: 4px;
+}
+
+.markdown-content::-webkit-scrollbar-thumb {
+  background: var(--text-tertiary);
+  border-radius: 4px;
+}
+
+.markdown-content::-webkit-scrollbar-thumb:hover {
+  background: var(--text-secondary);
+}
+
+.markdown-content {
+  scrollbar-width: thin;
+  scrollbar-color: var(--text-tertiary) var(--bg-secondary);
 }
 
 .markdown-content .heading-1 {
@@ -536,6 +651,10 @@ body {
   margin: 20px 0;
 }
 
+[data-theme="dark"] .markdown-content pre {
+  background-color: #0d1117;
+}
+
 .markdown-content pre code {
   background: none;
   padding: 0;
@@ -590,11 +709,14 @@ body {
 /* Authentication screen */
 .auth-screen {
   height: 100vh;
+  width: 100vw;
   display: flex;
   justify-content: center;
   align-items: center;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  position: relative;
+  position: fixed;
+  top: 0;
+  left: 0;
   overflow: hidden;
 }
 
@@ -815,7 +937,8 @@ body {
     padding: 20px;
   }
   
-  .logout-btn span {
+  .logout-btn span,
+  .theme-toggle span {
     display: none;
   }
   
