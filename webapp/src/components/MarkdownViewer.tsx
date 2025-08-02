@@ -10,12 +10,14 @@ interface MarkdownViewerProps {
   filePath: string | null;
   editMode: boolean;
   onToggleEdit: () => void;
+  onSave?: (content: string, filePath: string) => void;
 }
 
 const MarkdownViewer: React.FC<MarkdownViewerProps> = ({ 
   filePath, 
   editMode, 
-  onToggleEdit 
+  onToggleEdit,
+  onSave
 }) => {
   const [content, setContent] = useState<string>('');
   const [editContent, setEditContent] = useState<string>('');
@@ -53,7 +55,11 @@ const MarkdownViewer: React.FC<MarkdownViewerProps> = ({
   const handleSave = () => {
     setContent(editContent);
     onToggleEdit();
-    // In a real implementation, this would save to a backend or GitHub API
+    
+    // Call the save callback if provided
+    if (onSave && filePath) {
+      onSave(editContent, filePath);
+    }
   };
 
   const handleCancel = () => {

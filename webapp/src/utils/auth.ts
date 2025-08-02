@@ -1,5 +1,5 @@
 const AUTH_KEY = 'ai-ideas-auth';
-const VALID_PASSWORDS = ['ideas2024', 'stiffler123']; // In production, this would be more secure
+const VALID_PASSWORDS = ['ideasStiffler@0902']; // In production, this would be more secure
 
 export const checkAuth = (): boolean => {
   const stored = localStorage.getItem(AUTH_KEY);

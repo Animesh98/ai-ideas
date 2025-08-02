@@ -61,9 +61,6 @@ const AuthScreen: React.FC<AuthScreenProps> = ({ onAuthenticated }) => {
             </button>
           </form>
           
-          <div className="auth-hint">
-            <small>Hint: Try 'ideas2024' or 'stiffler123'</small>
-          </div>
         </div>
       </div>
       

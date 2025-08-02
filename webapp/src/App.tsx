@@ -3,13 +3,16 @@ import { Menu, LogOut, Sun, Moon } from 'lucide-react';
 import AuthScreen from './components/AuthScreen';
 import Sidebar from './components/Sidebar';
 import MarkdownViewer from './components/MarkdownViewer';
+import { ToastContainer } from './components/Toast';
 import { checkAuth, logout } from './utils/auth';
 import { ThemeProvider, useTheme } from './contexts/ThemeContext';
+import { useToast } from './hooks/useToast';
 import type { AppState } from './types';
 import './App.css';
 
 function AppContent() {
   const { theme, toggleTheme } = useTheme();
+  const { toasts, removeToast, success, info } = useToast();
   const [appState, setAppState] = useState<AppState>({
     isAuthenticated: false,
     selectedFile: null,
@@ -108,9 +111,16 @@ function AppContent() {
             filePath={appState.selectedFile}
             editMode={appState.editMode}
             onToggleEdit={toggleEditMode}
+            onSave={(_content: string, filePath: string) => {
+              // Simulate saving - in a real app, this would save to GitHub API
+              success('File Saved', `Changes to ${filePath.split('/').pop()} have been saved locally.`);
+              info('GitHub Integration', 'To save changes permanently, you would need to implement GitHub API integration.');
+            }}
           />
         </div>
       </main>
+      
+      <ToastContainer toasts={toasts} onClose={removeToast} />
     </div>
   );
 }
