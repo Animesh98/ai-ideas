@@ -63,7 +63,7 @@ YouTube URL → Transcript Extraction → Content Analysis → Entity Recognitio
 ├─────────────────────────────────────┤
 │ • Share sheet integration           │
 │ • Chat interface                    │
-│ • Action recommendations           │
+│ • Action recommendations            │
 │ • Settings & account management     │
 └─────────────────────────────────────┘
 ```
@@ -75,8 +75,8 @@ YouTube URL → Transcript Extraction → Content Analysis → Entity Recognitio
 ├─────────────────────────────────────┤
 │ • Rate limiting & authentication    │
 │ • Video processing queue            │
-│ • AI inference endpoints           │
-│ • External API orchestration       │
+│ • AI inference endpoints            │
+│ • External API orchestration        │
 └─────────────────────────────────────┘
 ```
 
