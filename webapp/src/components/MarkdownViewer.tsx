@@ -3,8 +3,10 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { oneDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import { oneLight } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import { Edit3, Eye, Save, X } from 'lucide-react';
 import { getFileContent } from '../utils/fileSystem';
+import { useTheme } from '../contexts/ThemeContext';
 
 interface MarkdownViewerProps {
   filePath: string | null;
@@ -19,6 +21,7 @@ const MarkdownViewer: React.FC<MarkdownViewerProps> = ({
   onToggleEdit,
   onSave
 }) => {
+  const { theme } = useTheme();
   const [content, setContent] = useState<string>('');
   const [editContent, setEditContent] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
@@ -149,7 +152,7 @@ const MarkdownViewer: React.FC<MarkdownViewerProps> = ({
                   const inline = (props as any).inline;
                   return !inline && match ? (
                     <SyntaxHighlighter
-                      style={oneDark as any}
+                      style={theme === 'dark' ? oneDark as any : oneLight as any}
                       language={match[1]}
                       PreTag="div"
                     >

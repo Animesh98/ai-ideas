@@ -11,6 +11,7 @@ html {
 
 body {
   height: 100%;
+  overflow: hidden;
 }
 
 :root {
@@ -661,18 +662,27 @@ body {
   border-radius: 4px;
   font-family: 'SF Mono', Monaco, monospace;
   font-size: 0.9em;
-  color: var(--text-primary);
+  color: #d73a49;
+  font-weight: 600;
 }
 
+[data-theme="dark"] .markdown-content code {
+  color: #79c0ff;
+}
+
+/* Light mode code blocks */
 .markdown-content pre {
-  background-color: #1e1e1e;
+  background-color: #f6f8fa;
+  border: 1px solid var(--border-color);
   border-radius: var(--radius-medium);
   overflow-x: auto;
   margin: 20px 0;
 }
 
+/* Dark mode code blocks */
 [data-theme="dark"] .markdown-content pre {
   background-color: #0d1117;
+  border: 1px solid #30363d;
 }
 
 .markdown-content pre code {
@@ -924,16 +934,6 @@ body {
 
 /* Mobile responsive */
 @media (max-width: 768px) {
-  body {
-    height: auto !important;
-    overflow: visible !important;
-  }
-  
-  .app {
-    height: auto !important;
-    min-height: 100vh;
-  }
-  
   .menu-btn {
     display: flex;
   }
@@ -957,11 +957,6 @@ body {
   
   .content-area {
     margin-left: 0;
-    height: auto !important;
-    min-height: calc(100vh - var(--header-height));
-    overflow: visible;
-    display: flex;
-    flex-direction: column;
   }
   
   .viewer-header {
@@ -970,19 +965,15 @@ body {
   
   .markdown-content {
     padding: 20px;
-    height: auto !important;
-    max-height: none !important;
-    overflow-y: visible !important;
+    height: 70vh;
+    overflow-y: scroll;
     -webkit-overflow-scrolling: touch;
-    overscroll-behavior-y: auto;
-    touch-action: pan-y;
   }
   
   .markdown-editor {
-    height: calc(100vh - var(--header-height) - 140px);
-    overflow-y: scroll !important;
+    height: 60vh;
+    overflow-y: scroll;
     -webkit-overflow-scrolling: touch;
-    overscroll-behavior: contain;
   }
   
   .logout-btn span,
@@ -993,20 +984,6 @@ body {
   .auth-card {
     margin: 20px;
     padding: 32px 24px;
-  }
-  
-  .markdown-viewer {
-    height: auto;
-    min-height: calc(100vh - var(--header-height));
-    display: flex;
-    flex-direction: column;
-    overflow: visible;
-  }
-  
-  .viewer-content {
-    flex: 1;
-    overflow: visible;
-    min-height: 0;
   }
 }
 
